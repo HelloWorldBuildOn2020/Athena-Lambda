@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"name": "AWS",
+			"path": "..\\.."
+		}
+	],
+	"launch": {
+		"configurations": [
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "ConnectToRedshift:app.lambda_handler (python3.8)",
+				"invokeTarget": {
+					"target": "code",
+					"projectRoot": "ConnectToRedshift/connect-redshift",
+					"lambdaHandler": "app.lambda_handler"
+				},
+				"lambda": {
+					"runtime": "python3.8",
+					"payload": {},
+					"environmentVariables": {}
+				}
+			},
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "ConnectToRedshift:HelloWorldFunction (python3.8)",
+				"invokeTarget": {
+					"target": "template",
+					"templatePath": "ConnectToRedshift/template.yaml",
+					"logicalId": "HelloWorldFunction"
+				},
+				"lambda": {
+					"payload": {},
+					"environmentVariables": {}
+				}
+			}
+		]
+	}
+}

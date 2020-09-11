@@ -1,5 +1,6 @@
 {
   "body": "{\"transferRef\": \"010092101507665148\"}",
+  "transferRef": "010092101507665148",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "POST",

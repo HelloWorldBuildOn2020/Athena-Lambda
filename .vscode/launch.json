@@ -3,6 +3,34 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "VerifySlip:VerifySlipFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "VerifySlip/template.yaml",
+                "logicalId": "VerifySlipFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "VerifySlip:HelloWorldFunction (python3.8)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "VerifySlip/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "CheckTransferRef:HelloWorldFunction (python3.8)",
             "invokeTarget": {
                 "target": "template",

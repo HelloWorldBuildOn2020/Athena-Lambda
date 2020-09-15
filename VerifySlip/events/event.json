@@ -1,6 +1,6 @@
 {
-  "body": "{\"transferRef\": \"010092101507665148\"}",
-  "transferRef": "010092101507665148",
+  "body": "{\"s3_slip_name\": \"06_August_720045.jpg\"}",
+  "s3_slip_name": "06_August_720045.jpg",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "POST",

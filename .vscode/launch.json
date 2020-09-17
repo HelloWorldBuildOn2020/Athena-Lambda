@@ -3,6 +3,20 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "ConnectToRedshift:HelloWorldFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "ConnectToRedshift/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "VerifySlip:VerifySlipFunction",
             "invokeTarget": {
                 "target": "template",

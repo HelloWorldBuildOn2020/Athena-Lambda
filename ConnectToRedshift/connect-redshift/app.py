@@ -1,26 +1,31 @@
 import json
 import boto3
-import pymysql
 import os
 import sys
 import logging
+import psycopg2
 
-db_host  = os.getenv('db_host')
-name = os.getenv('db_username')
-password = os.getenv('db_password')
-db_name = os.getenv('db_name')
+database = os.environ['DATABASE']
+port = os.environ['PORT']
+user = os.environ['USER']
+password = os.environ['PASSWORD']
+host = os.environ['HOST']
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+conn = psycopg2.connect(
+    database=database,
+    port=port,
+    user=user,
+    password=password,
+    host=host
+)
 
-try:
-    conn = pymysql.connect(db_host, user=name, passwd=password, db=db_name, connect_timeout=5)
-except pymysql.MySQLError as e:
-    logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
-    logger.error(e)
-    sys.exit()
+cursor = conn.cursor()
+tables = cursor.execute("SELECT * FROM users;")
+print(cursor.fetchall())
+# cursor.execute("UPDATE table SET attribute='new'")
+# conn.commit()
+cursor.close()
 
-logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
 
 client = boto3.client('redshift')
 def lambda_handler(event, context):

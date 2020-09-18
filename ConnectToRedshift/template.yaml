@@ -8,15 +8,22 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 10
 
 Resources:
-  HelloWorldFunction:
+  ConnectToRedshift:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: connect-redshift/
       Handler: app.lambda_handler
       Runtime: python3.8
+      Environment:
+        Variables:
+          DATABASE: athena
+          PORT: 5439
+          USER: HelloWorld
+          PASSWORD: WowSecurePassword
+          HOST: localhost
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

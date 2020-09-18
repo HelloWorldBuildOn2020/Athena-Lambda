@@ -3,6 +3,20 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "GetImageFromS3:HelloWorldFunction (python3.8)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "GetImageFromS3/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "ConnectToRedshift:HelloWorldFunction",
             "invokeTarget": {
                 "target": "template",

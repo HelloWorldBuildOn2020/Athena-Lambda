@@ -11,9 +11,11 @@ phases:
       - pipenv run sam package --template-file ./CheckTransferRef/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-CheckTransferRef-template.yml
       - pipenv run sam package --template-file ./ConnectToRedshift/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-ConnectToRedshift-template.yml
       - pipenv run sam package --template-file ./GetImageFromS3/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-GetImageFromS3-template.yml
+      - pipenv run sam package --template-file ./VerifySlip/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-VerifySlip-template.yml
 
 artifacts:
     files:
         - 'packaged-CheckTransferRef-template.yml'
         - 'packaged-ConnectToRedshift-template.yml'
         - 'packaged-GetImageFromS3-template.yml'
+        - 'packaged-VerifySlip-template.yml'

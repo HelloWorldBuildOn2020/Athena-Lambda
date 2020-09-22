@@ -7,6 +7,7 @@ phases:
     commands:
       - pip install --upgrade pip
       - pip install pipenv --user
+      - pipenv install --skip-lock
       - pipenv install awscli aws-sam-cli
       - pipenv run sam package --template-file ./CheckTransferRef/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-CheckTransferRef-template.yml
       - pipenv run sam package --template-file ./ConnectToRedshift/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-ConnectToRedshift-template.yml

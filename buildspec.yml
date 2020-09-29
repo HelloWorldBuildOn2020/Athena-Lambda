@@ -11,6 +11,7 @@ phases:
       - sam package --template-file ./ConnectToRedshift/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-ConnectToRedshift-template.yml
       - sam package --template-file ./GetImageFromS3/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-GetImageFromS3-template.yml
       - sam package --template-file ./VerifySlip/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-VerifySlip-template.yml
+      - sam package --template-file ./TriggerSNS/template.yaml --s3-bucket helloworld-sam-athena --output-template-file packaged-TriggerSNS-template.yml
 
 artifacts:
     files:
@@ -18,3 +19,4 @@ artifacts:
         - 'packaged-ConnectToRedshift-template.yml'
         - 'packaged-GetImageFromS3-template.yml'
         - 'packaged-VerifySlip-template.yml'
+        - 'packaged-TriggerSNS-template.yml'

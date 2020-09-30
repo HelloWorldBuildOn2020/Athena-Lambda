@@ -3,6 +3,34 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "TriggerSNS:TriggerSNSFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "TriggerSNS/template.yaml",
+                "logicalId": "TriggerSNSFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "TriggerSNS:TriggerSNSFunction (python3.8)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "TriggerSNS/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "GetImageFromS3:HelloWorldFunction (python3.8)",
             "invokeTarget": {
                 "target": "template",

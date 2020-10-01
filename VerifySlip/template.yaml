@@ -18,9 +18,16 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.8
       Role: 'arn:aws:iam::192479299400:role/service-role/ReadQRCode-role-6q1akagw'
+      Environment:
+        Variables:
+          DATABASE: athena
+          PORT: 5439
+          USER: helloworld
+          PASSWORD: wowpasswordissecure
+          HOST: localhost
       Events:
         VerifySlip:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /verify-slip
-            Method: get
+            Method: POST

@@ -23,13 +23,6 @@ def lambda_handler(event, context):
 
         json_bank_response = json.loads(bank_response.content.decode('utf8').replace(" ", ""))
         
-        message = json_bank_response
+        return json_bank_response
     else:
-        message = 'Transfer Ref is invalid.'
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": message,
-            # "location": ip.text.replace("\n", "")
-        }),
-    }
+        return 'Transfer Ref invalid.'

@@ -9,9 +9,10 @@ def lambda_handler(event, context):
     fail_image = event['image_from_s3']
     
     email_body = 'Hello, \nResult of fail to verify\n' + \
-        'Date: ' + fail_date + "\n" +\
-        'Time: ' + fail_time + "\n" +\
-        'Image: ' + fail_image + "\n" +\
+        'Date: ' + fail_date + "\n" + \
+        'Time: ' + fail_time + "\n" + \
+        'Image: ' + fail_image + "\n" + \
+        'You can check on https://athena.khotor.live' + "\n" + \
         'Best Regards, \nAthena'
     
     response = sns.publish(

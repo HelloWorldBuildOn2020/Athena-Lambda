@@ -47,7 +47,7 @@ def lambda_handler(event, context):
     # image name = userid + company name + date + .jpg
     user_id = str(user[0][1])
     comany_name = company[0][1]
-    filename = user_id + "_" + comany_name + str(datetime.datetime.now().strftime("_%d_%B_%f")) + '.jpg'
+    filename = user_id + "_" + comany_name.replace(" ", "") + str(datetime.datetime.now().strftime("_%d_%B_%f")) + '.jpg'
  
     s3 = boto3.client('s3')
     get_file_content = event['content']
@@ -57,9 +57,8 @@ def lambda_handler(event, context):
     read_qrcode_url = os.environ['READ_QR_CODE_API'] + '?imageName=' + filename
     response_read_qr_code = requests.request("GET", read_qrcode_url)
     transfer_ref = json.loads(response_read_qr_code.content.decode('utf-8'))['transfer_ref']
-
     response_lambda = client_lambda.invoke(
-        FunctionName='CheckTransferRef-HelloWorldFunction-1JXCD98X6QC7K',
+        FunctionName='CheckTransferRef-CheckTransferRefFunction-1AMZF0WTL9C71',
         InvocationType='RequestResponse',
         LogType='Tail',
         Payload=json.dumps({ 'transferRef': transfer_ref }),

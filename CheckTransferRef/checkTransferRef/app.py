@@ -5,7 +5,7 @@ import requests
 def lambda_handler(event, context):
     transfer_ref = event['transferRef']
     message = ''
-    if len(transfer_ref) == 18 and transfer_ref.isdigit():
+    if len(transfer_ref) == 18:
         # save to database and send to Bank api
         # send bank api
         url = "https://openapi-sandbox.kasikornbank.com/v1/verslip/kbank/verify"
@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         bank_response = requests.request("POST", url, headers=headers, data=payload)
 
         json_bank_response = json.loads(bank_response.content.decode('utf8').replace(" ", ""))
-        
+
         return json_bank_response
     else:
         return 'Transfer Ref invalid.'

@@ -57,6 +57,7 @@ def lambda_handler(event, context):
     read_qrcode_url = os.environ['READ_QR_CODE_API'] + '?imageName=' + filename
     response_read_qr_code = requests.request("GET", read_qrcode_url)
     transfer_ref = json.loads(response_read_qr_code.content.decode('utf-8'))['transfer_ref']
+ 
     response_lambda = client_lambda.invoke(
         FunctionName='CheckTransferRef-CheckTransferRefFunction-1AMZF0WTL9C71',
         InvocationType='RequestResponse',
@@ -65,7 +66,6 @@ def lambda_handler(event, context):
     )
 
     payload = json.load(response_lambda['Payload'])
-
     bank_response = payload['data']
     bank_date = bank_response['transDate']
     bank_time = bank_response['transTime'][0:5]
@@ -82,11 +82,19 @@ def lambda_handler(event, context):
             bank_paidLocalCurrency,
             bank_date,
             bank_time,
-            datetime.datetime.now()
+            filename
         )
-        cursor.execute(insert_stmt, value_insert)
-        conn.commit()
-        cursor.close()
+        try:
+            cursor.execute(insert_stmt, value_insert)
+            conn.commit()
+        except (Exception, psycopg2.Error) as error:
+            print("Error connecting to PostgreSQL database", error)
+            conn = None
+        finally:
+            if(conn != None):
+                cursor.close()
+                conn.close()
+                print("PostgreSQL connection is now closed")
         return {
             "statusCode": 200,
             "image_file": json.dumps(filename)

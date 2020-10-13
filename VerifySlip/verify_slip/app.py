@@ -103,7 +103,19 @@ def lambda_handler(event, context):
         response = {
             "statusCode": 400,
             "body": "Bad Request."
-        } 
+        }
+        trigger_sns(date, time, filename)
         raise Exception("Status code 400: Bad request.")
 
+def trigger_sns(date, time, filename):
+    invoke_trigger_sns = client.invoke(
+        FunctionName='TriggerSNS-TriggerSNSFunction-16NJMO6YBYMVX',
+        InvocationType='RequestResponse',
+        LogType='Tail',
+        Payload=json.dumps({ 
+            'date': date,
+            'time' : time,
+            'image_from_s3' : filename
+        })
+    )
    

@@ -25,6 +25,7 @@ Resources:
           USER: helloworld
           PASSWORD: wowpasswordissecure
           HOST: localhost
+          READ_QR_CODE_API: https://example.com/qrcode/
       Events:
         VerifySlip:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

@@ -53,17 +53,10 @@ def lambda_handler(event, context):
     get_file_content = event['content']
     decode_content = base64.b64decode(get_file_content)
     s3_upload = s3.put_object(Bucket="slip-test", Key=filename, Body=decode_content, ACL='public-read', ContentType='image/jpeg')
-    
-    response = client.detect_text(
-        Image={
-            'S3Object': {
-                'Bucket': 'slip-test',
-                'Name': filename
-            }
-        }
-    )
 
-    transfer_ref = response['TextDetections'][13]['DetectedText']
+    read_qrcode_url = os.environ['READ_QR_CODE_API'] + '?imageName=' + filename
+    response_read_qr_code = requests.request("GET", read_qrcode_url)
+    transfer_ref = json.loads(response_read_qr_code.content.decode('utf-8'))['transfer_ref']
 
     response_lambda = client_lambda.invoke(
         FunctionName='CheckTransferRef-HelloWorldFunction-1JXCD98X6QC7K',

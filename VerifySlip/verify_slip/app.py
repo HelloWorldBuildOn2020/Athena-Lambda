@@ -21,21 +21,18 @@ conn = psycopg2.connect(
     password=password,
     host=host
 )
-try:
-    cursor = conn.cursor()
 
-    select_stmt = "SELECT * FROM users WHERE user_id = %(user_id)s"
-    cursor.execute(select_stmt, { 'user_id' : 1 }) 
-    user = cursor.fetchall()
+cursor = conn.cursor()
 
-    select_company_stmt = "SELECT * FROM company WHERE company_id = %(comany_id)s"
-    cursor.execute(select_company_stmt, { 'comany_id' : user[0][0] }) 
-    company = cursor.fetchall()
-    # cursor.execute("UPDATE table SET attribute='new'")
-    # conn.commit()
-except(Exception, psycopg2.Error) as error:
-    print("Error connecting to PostgreSQL database", error)
-    conn = None
+select_stmt = "SELECT * FROM users WHERE user_id = %(user_id)s"
+cursor.execute(select_stmt, { 'user_id' : 1 }) 
+user = cursor.fetchall()
+
+select_company_stmt = "SELECT * FROM company WHERE company_id = %(comany_id)s"
+cursor.execute(select_company_stmt, { 'comany_id' : user[0][0] }) 
+company = cursor.fetchall()
+# cursor.execute("UPDATE table SET attribute='new'")
+# conn.commit()
 
 client = boto3.client('rekognition')
 client_lambda = boto3.client('lambda')
@@ -90,7 +87,7 @@ def lambda_handler(event, context):
         try:
             cursor.execute(insert_stmt, value_insert)
             conn.commit()
-        except(Exception, psycopg2.Error) as error:
+        except (Exception, psycopg2.Error) as error:
             print("Error connecting to PostgreSQL database", error)
             conn = None
         finally:

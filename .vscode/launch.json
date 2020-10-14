@@ -3,6 +3,20 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "Overview:HelloWorldFunction (python3.8)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "Overview/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "TriggerSNS:TriggerSNSFunction",
             "invokeTarget": {
                 "target": "template",

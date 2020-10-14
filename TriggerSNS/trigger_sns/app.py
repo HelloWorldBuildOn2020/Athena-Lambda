@@ -14,7 +14,7 @@ def lambda_handler(event, context):
         'Date: ' + fail_date + "\n" + \
         'Time: ' + fail_time + "\n" + \
         'Image: ' + fail_image + "\n" + \
-        'You can check on https://athena.khotor.live/transaction/detail/' + fail_image + "\n" + \
+        'You can check on https://athena.khotor.live/' + "\n" + \
         'Best Regards, \nAthena'
     
     response = sns.publish(

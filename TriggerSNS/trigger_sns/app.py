@@ -25,15 +25,17 @@ email = cursor.fetchall()
 
 sns = boto3.client('sns')
 def lambda_handler(event, context):
+    fail_amount = event['amount'],
     fail_date = event['date']
     fail_time = event['time']
     fail_image = event['image_from_s3']
     
     email_body = 'Hello, \nResult of fail to verify\n' + \
+        'Amount: ' + fail_amount + "\n" + \
         'Date: ' + fail_date + "\n" + \
         'Time: ' + fail_time + "\n" + \
         'Image: ' + fail_image + "\n" + \
-        'You can check on https://athena.khotor.live' + "\n" + \
+        'You can check on https://athena.khotor.live/' + "\n" + \
         'Best Regards, \nAthena'
     
     for each_email in email:

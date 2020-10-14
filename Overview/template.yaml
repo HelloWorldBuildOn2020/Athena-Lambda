@@ -22,8 +22,8 @@ Resources:
           DATABASE: athena
           PORT: 5439
           USER: helloworld
-          PASSWORD: Gtd7MMTeA9
-          HOST: athena-cluster-dev.clgxwymilgsh.ap-southeast-2.redshift.amazonaws.com
+          PASSWORD: helloworldpassword
+          HOST: localhost
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

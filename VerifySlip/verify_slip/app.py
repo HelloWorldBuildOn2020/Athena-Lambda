@@ -72,9 +72,10 @@ def lambda_handler(event, context):
     bank_paidLocalCurrency = bank_response['paidLocalCurrency']
     bank_message_status = payload['statusMessage']
 
+    insert_stmt = """ INSERT INTO slip VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    value_insert = ()
     conditions = (bank_date == date) & (bank_time == time) & (bank_paidLocalCurrency == amount) & (bank_message_status == "SUCCESS") 
     if conditions:
-        insert_stmt = """ INSERT INTO slip VALUES (%s, %s, %s, %s, %s, %s, %s)"""
         value_insert = (
             transfer_ref,
             user_id,
@@ -82,28 +83,30 @@ def lambda_handler(event, context):
             bank_paidLocalCurrency,
             bank_date,
             bank_time,
-            filename
+            filename,
+            'success',
+            datetime.datetime.now()
         )
-        try:
-            cursor.execute(insert_stmt, value_insert)
-            conn.commit()
-        except (Exception, psycopg2.Error) as error:
-            print("Error connecting to PostgreSQL database", error)
-            conn = None
-        finally:
-            if(conn != None):
-                cursor.close()
-                conn.close()
-                print("PostgreSQL connection is now closed")
+        cursor.execute(insert_stmt, value_insert)
+        conn.commit()
         return {
             "statusCode": 200,
             "image_file": json.dumps(filename)
         } 
     else:
-        response = {
-            "statusCode": 400,
-            "body": "Bad Request."
-        }
+        value_insert = (
+            transfer_ref,
+            user_id,
+            bank_response['sendingBank'],
+            amount,
+            date,
+            time,
+            filename,
+            'fail',
+            datetime.datetime.now()
+        )
+        cursor.execute(insert_stmt, value_insert)
+        conn.commit()
         trigger_sns(amount, date, time, filename)
         raise Exception("Status code 400: Bad request.")
 

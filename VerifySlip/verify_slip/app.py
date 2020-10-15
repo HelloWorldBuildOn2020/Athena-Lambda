@@ -111,7 +111,7 @@ def lambda_handler(event, context):
         raise Exception("Status code 400: Bad request.")
 
 def trigger_sns(amount, date, time, filename):
-    invoke_trigger_sns = client.invoke(
+    invoke_trigger_sns = client_lambda.invoke(
         FunctionName='TriggerSNS-TriggerSNSFunction-16NJMO6YBYMVX',
         InvocationType='RequestResponse',
         LogType='Tail',

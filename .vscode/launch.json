@@ -3,6 +3,20 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "AddEmailSub:HelloWorldFunction (python3.8)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "AddEmailSub/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "GetEmailSub:HelloWorldFunction (python3.8)",
             "invokeTarget": {
                 "target": "template",

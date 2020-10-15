@@ -5,7 +5,7 @@ import psycopg2
 
 database = os.environ['DATABASE']
 port = os.environ['PORT']
-user = os.environ['USER']
+user = os.environ['USER_DB']
 password = os.environ['PASSWORD']
 host = os.environ['HOST']
 

@@ -1,42 +1,45 @@
 import json
+import os
+import psycopg2
 
-# import requests
+
+database = os.environ['DATABASE']
+port = os.environ['PORT']
+user = os.environ['USER']
+password = os.environ['PASSWORD']
+host = os.environ['HOST']
 
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
+    email_event = event['email']
+    
+    conn = psycopg2.connect(
+        database=database,
+        port=port,
+        user=user,
+        password=password,
+        host=host
+    )
 
-    Parameters
-    ----------
-    event: dict, required
-        API Gateway Lambda Proxy Input Format
+    cursor = conn.cursor()
 
-        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
+    select_email_stmt = "SELECT * FROM email_subscription WHERE email = %(email)s"
+    cursor.execute(select_email_stmt, { 'email' : email_event }) 
+    email = cursor.fetchall()
 
-    context: object, required
-        Lambda Context runtime methods and attributes
+    insert_email_stmt = "INSERT INTO email_subscription (email, company_id) VALUES (%s, %s)"
+    value_insert = ()
 
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
-
-    Returns
-    ------
-    API Gateway Lambda Proxy Output Format: dict
-
-        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    """
-
-    # try:
-    #     ip = requests.get("http://checkip.amazonaws.com/")
-    # except requests.RequestException as e:
-    #     # Send some context about this error to Lambda Logs
-    #     print(e)
-
-    #     raise e
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "hello world",
-            # "location": ip.text.replace("\n", "")
-        }),
-    }
+    if len(email) == 0:
+        value_insert = (
+            email_event,
+            1
+        )
+        cursor.execute(insert_email_stmt, value_insert)
+        conn.commit()
+        return {
+            "statusCode": 200,
+            "message": "Add email success!"
+        }
+    else:
+        raise Exception("Status code 400: Bad request. This Email already exited")
